@@ -24,13 +24,13 @@
 ### 效果演示
 
 ```
-你：帮我列出 0# Research 目录里的笔记
-Claude：📁 VI-SLAM  📄 IDEAs.note  📄 Paper Snippets.note ...
+你：帮我列出"工作"目录里的笔记
+Claude：📁 项目A  📄 想法.note  📄 会议摘要.note ...
 
 你：把这篇文章保存到有道云笔记 https://arxiv.org/abs/2404.xxxxx
 Claude：✅ 已剪藏「XXX: A Survey」到有道云笔记
 
-你：在 Legacy 目录下创建一篇今日会议记录
+你：在"归档"目录下创建一篇今日会议记录
 Claude：✅ 已创建笔记「2026-04-01 会议记录」
 ```
 

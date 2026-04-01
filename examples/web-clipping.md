@@ -11,10 +11,10 @@ Claude：youdaonote clip "https://arxiv.org/abs/2404.12345"
 
 **剪藏到指定目录**
 ```
-你：把这篇博客存到"1# 论文&代码阅读笔记"目录
+你：把这篇博客存到"学习"目录
 Claude：（先获取目录 ID，再剪藏）
-youdaonote clip "https://example.com/blog" -f WEB8e59474...
-✅ 已保存到「1# 论文&代码阅读笔记」
+youdaonote clip "https://example.com/blog" -f <folderID>
+✅ 已保存到「学习」
 ```
 
 **URL 包含特殊字符**

@@ -6,31 +6,31 @@
 ```
 你：帮我列出有道云笔记的根目录
 Claude：
-📁 会议纪要
-📁 0# Research
-📁 1# 论文&代码阅读笔记
-📁 TODO
-📄 高科技.note
+📁 日常记录
+📁 工作
+📁 学习
+📁 任务清单
+📄 示例笔记.note
 ```
 
 **进入子目录**
 ```
-你：列出"0# Research"目录里的笔记
+你：列出"工作"目录里的笔记
 Claude：先获取目录 ID，再列出内容：
-📁 VI-SLAM
-📁 Actuated LiDAR
-📄 IDEAs.note
-📄 Paper Snippets.note
+📁 项目A
+📁 项目B
+📄 想法.note
+📄 文章摘录.note
 ```
 
 **搜索笔记**
 ```
-你：搜索我笔记里关于"点云分割"的内容
-Claude：youdaonote search "点云分割"
+你：搜索我笔记里关于"机器学习"的内容
+Claude：youdaonote search "机器学习"
 找到 3 条结果：
-📄 5篇CVPR 点云分割相关...
-📄 pc2img.note
-📄 IDEAs.note
+📄 文章摘录A.note
+📄 学习笔记.note
+📄 想法.note
 ```
 
 ---
@@ -38,10 +38,10 @@ Claude：youdaonote search "点云分割"
 ## 读取笔记
 
 ```
-你：读取"IDEAs.note"的内容
+你：读取"想法.note"的内容
 Claude：（先 list 获取 fileId，再 read）
-# Research Ideas
-- 基于时序一致性的动态点云分割
+# 工作想法
+- 规划方向一
 - ...
 ```
 
@@ -52,8 +52,8 @@ Claude：（先 list 获取 fileId，再 read）
 ### 创建富文本笔记（.note 格式）
 
 ```
-你：在 Legacy 目录下创建一篇今日会议记录
-Claude：youdaonote create -n "2026-04-01 会议记录" -c "..." -f WEB65d95b...
+你：在"归档"目录下创建一篇今日会议记录
+Claude：youdaonote create -n "2026-04-01 会议记录" -c "..." -f <folderID>
 ✅ 已创建笔记：2026-04-01 会议记录
 ```
 
@@ -62,12 +62,12 @@ Claude：youdaonote create -n "2026-04-01 会议记录" -c "..." -f WEB65d95b...
 > `create` 命令只能创建富文本笔记，Markdown 笔记需使用 `save` 命令。
 
 ```
-你：在 Research 目录下新建一篇 Markdown 格式的论文笔记
+你：在"工作"目录下新建一篇 Markdown 格式的笔记
 Claude：
 1. 生成 JSON payload（Python）
 2. 调用 youdaonote save --file /tmp/note_payload.json
 3. 若目录未生效则 move 到目标目录
-✅ 已创建 Markdown 笔记：论文阅读笔记.md
+✅ 已创建 Markdown 笔记：工作笔记.md
 ```
 
 ---
@@ -91,15 +91,15 @@ Claude：youdaonote delete <fileId>
 ```
 你：列出我所有的待办事项
 Claude：youdaonote todo list
-[ ] 提交论文初稿  截止：2026-04-10
-[ ] 组会 PPT     截止：2026-04-03
-[x] 代码 review  已完成
+[ ] 完成项目报告  截止：2026-04-10
+[ ] 准备演讲材料  截止：2026-04-03
+[x] 代码审查      已完成
 
-你：新建一个待办：准备答辩材料，截止 4 月 20 日
-Claude：youdaonote todo create -t "准备答辩材料" -d 2026-04-20
+你：新建一个待办：准备季度总结，截止 4 月 20 日
+Claude：youdaonote todo create -t "准备季度总结" -d 2026-04-20
 ✅ 已创建
 
-你：把"提交论文初稿"标记为完成
+你：把"完成项目报告"标记为完成
 Claude：youdaonote todo update <todoId> --done
 ✅ 已完成
 ```
