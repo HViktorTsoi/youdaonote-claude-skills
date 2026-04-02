@@ -70,7 +70,17 @@ youdaonote create -n "笔记标题" -c "内容" -f <folderID>
 
 `create` 命令无法创建 `.md` 笔记，必须使用 `save` 命令并指定 `"type": "md"`。
 
-**步骤一：** 用 Python 生成 JSON 文件（避免换行符转义问题）
+**步骤一：** 用 Write 工具将 markdown 内容写入文件
+
+> ⚠️ **严禁**用 `python3 -c "内容"` 或 shell heredoc 内联传入含反引号的 markdown！
+> shell 会把 ` ``` ` 当命令替换执行，导致代码块内容被清空或替换成命令输出。
+> 必须先用 Write 工具写文件，再用 Python 读取。
+
+```
+# 用 Write 工具写入 /tmp/note_content.md，内容为完整 markdown
+```
+
+**步骤二：** 用 Python 读取文件生成 JSON
 
 ```python
 import json
@@ -89,14 +99,14 @@ with open('/tmp/note_payload.json', 'w') as f:
     json.dump(payload, f, ensure_ascii=False)
 ```
 
-**步骤二：** 调用 save 命令
+**步骤三：** 调用 save 命令
 
 ```bash
 youdaonote save --file /tmp/note_payload.json
 # 输出：笔记 ID：XXXXXXXX
 ```
 
-**步骤三：** 若 parentId 不生效，手动移动
+**步骤四：** 若 parentId 不生效，手动移动
 
 ```bash
 # save 命令有时忽略 parentId，笔记会落在默认目录
@@ -202,7 +212,7 @@ youdaonote todo group-create "分组名称"
 1. **用户要列出笔记** → `youdaonote list`，如需进入子目录先获取目录 ID
 2. **用户要搜索笔记** → `youdaonote search "关键词"`
 3. **用户要创建富文本笔记** → `youdaonote create -n "标题" -c "内容"`，内容长时用 `--file`
-4. **用户要创建 Markdown 笔记** → 用 Python 生成 JSON（含 `"type": "md"`），再调用 `youdaonote save --file payload.json`，最后用 `move` 移至目标目录
+4. **用户要创建 Markdown 笔记** → 用 Write 工具写 `.md` 文件 → Python 读取生成 JSON（含 `"type": "md"`）→ `youdaonote save --file payload.json` → `move` 移至目标目录
 5. **用户要读取笔记** → 先 `list` 获取 fileId，再 `youdaonote read <fileId>`
 6. **用户要管理 Todo** → 使用 `youdaonote todo` 系列命令
 
