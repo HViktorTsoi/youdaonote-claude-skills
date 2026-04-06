@@ -99,14 +99,23 @@ with open('/tmp/note_payload.json', 'w') as f:
     json.dump(payload, f, ensure_ascii=False)
 ```
 
-**步骤三：** 调用 save 命令
+**步骤三：** 用 save 命令创建占位笔记（内容随意，仅用于建立 .md 文件）
 
 ```bash
 youdaonote save --file /tmp/note_payload.json
 # 输出：笔记 ID：XXXXXXXX
 ```
 
-**步骤四：** 若 parentId 不生效，手动移动
+> ⚠️ `save`/`createAnyNote` 是为 HTML 内容设计的，会把 `"` 编码为 `&quot;`，导致代码块中的引号乱码。
+> 因此 **不能** 用 save 直接写入含引号的 markdown 内容，只用它建立 `.md` 文件。
+
+**步骤四：** 立即用 `update` 命令覆写真正的内容（updateMarkdownNote 不做 HTML 转义）
+
+```bash
+youdaonote update <fileId> --file /tmp/note_content.md
+```
+
+**步骤五：** 若 parentId 不生效，手动移动
 
 ```bash
 # save 命令有时忽略 parentId，笔记会落在默认目录
@@ -212,7 +221,7 @@ youdaonote todo group-create "分组名称"
 1. **用户要列出笔记** → `youdaonote list`，如需进入子目录先获取目录 ID
 2. **用户要搜索笔记** → `youdaonote search "关键词"`
 3. **用户要创建富文本笔记** → `youdaonote create -n "标题" -c "内容"`，内容长时用 `--file`
-4. **用户要创建 Markdown 笔记** → 用 Write 工具写 `.md` 文件 → Python 读取生成 JSON（含 `"type": "md"`）→ `youdaonote save --file payload.json` → `move` 移至目标目录
+4. **用户要创建 Markdown 笔记** → 用 Write 工具写 `.md` 文件 → Python 读取生成 JSON（含 `"type": "md"`，content 可为空）→ `youdaonote save` 建立文件 → **立即** `youdaonote update --file` 覆写真实内容（避免 `&quot;` 乱码）→ `move` 移至目标目录
 5. **用户要读取笔记** → 先 `list` 获取 fileId，再 `youdaonote read <fileId>`
 6. **用户要管理 Todo** → 使用 `youdaonote todo` 系列命令
 
